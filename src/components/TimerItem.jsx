@@ -42,9 +42,7 @@ const TimerItem = ({timer, onDelete, onPress}) => {
     <ItemContainerTouchable onPress={onPress}>
       <TimerTitleText>{timer.title}</TimerTitleText>
       <DeleteButtonTouchable onPress={() => onDelete(timer.id)}>
-        <DeleteIcon>
-          DEL
-        </DeleteIcon>
+        <DeleteIcon>DEL</DeleteIcon>
       </DeleteButtonTouchable>
     </ItemContainerTouchable>
   );

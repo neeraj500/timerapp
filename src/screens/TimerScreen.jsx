@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { TouchableOpacity, Modal } from 'react-native';
+import React, {useContext, useEffect, useState} from 'react';
+import {TouchableOpacity, Modal} from 'react-native';
 import TimerContext from '../context/TimerContext';
 import styled from 'styled-components/native';
 
@@ -37,21 +37,21 @@ const ButtonContainer = styled.View`
 `;
 
 const StyledButton = styled.TouchableOpacity`
-  background-color: #90caf9; 
-  padding: 15px 30px; 
-  border-radius: 50px; 
+  background-color: #90caf9;
+  padding: 15px 30px;
+  border-radius: 50px;
   margin: 0 10px;
   align-items: center;
   justify-content: center;
 `;
 
 const ActiveButtonText = styled.Text`
-  color: #1e88e5; 
+  color: #1e88e5;
   font-size: 18px;
 `;
 
 const InactiveButtonText = styled.Text`
-  color: #fff; 
+  color: #fff;
   font-size: 18px;
 `;
 
@@ -85,11 +85,13 @@ const BackButtonText = styled.Text`
 `;
 
 const TimerScreen = ({route, navigation}) => {
-  const { timerId } = route.params;
-  const { state, dispatch } = useContext(TimerContext);
+  const {timerId} = route.params;
+  const {state} = useContext(TimerContext);
   const timer = state.timers.find(t => t.id === timerId);
   const [isRunning, setIsRunning] = useState(false);
-  const [remainingTime, setRemainingTime] = useState(timer ? timer.duration : 0);
+  const [remainingTime, setRemainingTime] = useState(
+    timer ? timer.duration : 0,
+  );
 
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [intervalId, setIntervalId] = useState(null);
@@ -97,7 +99,7 @@ const TimerScreen = ({route, navigation}) => {
   useEffect(() => {
     if (isRunning) {
       const id = setInterval(() => {
-        setRemainingTime((prevTime) => {
+        setRemainingTime(prevTime => {
           if (prevTime <= 1) {
             setIsRunning(false);
             clearInterval(id);
@@ -112,17 +114,17 @@ const TimerScreen = ({route, navigation}) => {
     } else {
       clearInterval(intervalId);
       return () => {};
-      }
+    }
   }, [isRunning]);
 
   const toggleTimer = () => {
-    setIsRunning((prevState) => !prevState);
+    setIsRunning(prevState => !prevState);
   };
 
   const handleReset = () => {
-      setIsRunning(false);
-      setRemainingTime(timer.duration);
-      setIsModalVisible(false)
+    setIsRunning(false);
+    setRemainingTime(timer.duration);
+    setIsModalVisible(false);
   };
 
   const handleBack = () => {
@@ -132,32 +134,27 @@ const TimerScreen = ({route, navigation}) => {
   return (
     <Container>
       <IntroText>Set a new timer</IntroText>
-        <Modal
-          visible={isModalVisible}
-          transparent={true}
-          onRequestClose={() => setIsModalVisible(false)}
-        >
-          <BlurOverlay>
-            <ModalContainer>
-              <ModalText>Time's Up!</ModalText>
-               <ButtonContainer>
-                <StyledButton onPress={handleReset}>
-                  <InactiveButtonText>
-                  Reset
-                  </InactiveButtonText>
-                </StyledButton>
-                <StyledButton onPress={() => navigation.navigate('Home')}>
-                  <InactiveButtonText>
-                  Home
-                  </InactiveButtonText>
-                </StyledButton>
-              </ButtonContainer>
-            </ModalContainer>
-          </BlurOverlay>
-        </Modal>
+      <Modal
+        visible={isModalVisible}
+        transparent={true}
+        onRequestClose={() => setIsModalVisible(false)}>
+        <BlurOverlay>
+          <ModalContainer>
+            <ModalText>Time's Up!</ModalText>
+            <ButtonContainer>
+              <StyledButton onPress={handleReset}>
+                <InactiveButtonText>Reset</InactiveButtonText>
+              </StyledButton>
+              <StyledButton onPress={() => navigation.navigate('Home')}>
+                <InactiveButtonText>Home</InactiveButtonText>
+              </StyledButton>
+            </ButtonContainer>
+          </ModalContainer>
+        </BlurOverlay>
+      </Modal>
 
       <Title>{timer?.title}</Title>
-       <TouchableOpacity onPress={toggleTimer}>
+      <TouchableOpacity onPress={toggleTimer}>
         <ElapsedTime>{remainingTime}</ElapsedTime>
       </TouchableOpacity>
       <ButtonContainer>

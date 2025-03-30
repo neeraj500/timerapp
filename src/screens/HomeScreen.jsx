@@ -40,7 +40,7 @@ const ButtonText = styled.Text`
 
 const EmptyListText = styled.Text`
   font-size: 64px;
-  color: #778899; /* Dim gray */
+  color: #778899;
   text-align: center;
   opacity: 0.7;
 `;
@@ -50,13 +50,13 @@ const HomeScreen = ({ navigation }) => {
   const {state, dispatch} = useContext(TimerContext);
   const [showForm, setShowForm] = useState(false);
 
-  // Handle adding a new timer
+  // adding a new timer
   const handleAddTimer = timer => {
     dispatch({type: 'ADD_TIMER', payload: timer});
     setShowForm(false);
   };
 
-  // Handle deleting a timer
+  // deleting a timer
   const handleDeleteTimer = id => {
     Alert.alert('Delete Timer', 'Are you sure you want to delete this timer?', [
       {text: 'Cancel', style: 'cancel'},
@@ -69,7 +69,7 @@ const HomeScreen = ({ navigation }) => {
 
   return (
     <Container>
-      {/* Conditional rendering based on showForm state */}
+      {/* conditional rendering based on showForm state */}
       {showForm ? (
         <TimerForm
           onSubmit={handleAddTimer}
@@ -97,7 +97,7 @@ const HomeScreen = ({ navigation }) => {
               />
             )}
 
-            {/* Add Timer button */}
+            {/* add timer button */}
             <AddButton onPress={() => setShowForm(true)}>
               <ButtonText>Add Timer</ButtonText>
             </AddButton>

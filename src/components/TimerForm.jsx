@@ -37,7 +37,7 @@ const AddButton = styled.TouchableOpacity`
 
 const ButtonText = styled.Text`
   font-size: 16px;
-  color: ${(props) => props.color || 'white'};
+  color: ${props => props.color || 'white'};
 `;
 
 const TimerForm = ({onSubmit, onCancel}) => {
@@ -45,7 +45,6 @@ const TimerForm = ({onSubmit, onCancel}) => {
   const [duration, setDuration] = useState('');
 
   const handleSubmit = () => {
-
     if (!title || !duration) {
       alert('Please fill in all fields');
       return;
@@ -56,10 +55,7 @@ const TimerForm = ({onSubmit, onCancel}) => {
       return;
     }
 
-
-
     const newTimer = {
-
       id: uuid.v4(),
       title,
       duration: parseInt(duration, 10),
@@ -72,32 +68,33 @@ const TimerForm = ({onSubmit, onCancel}) => {
   };
 
   return (
-      <FormContainer>
-        <InputField
-          placeholder="Timer Title"
-          placeholderTextColor="#90a4ae"
-          value={title}
-          onChangeText={setTitle}
-        />
-        <InputField
-          placeholder="Duration in seconds"
-          placeholderTextColor="#90a4ae"
-          value={duration}
-          onChangeText={(text) => {
-            if (/^\d+$/.test(text) || text === '') {
-              setDuration(text);
-            }
-          }}
-
-          keyboardType="numeric"
-        />
-        <ButtonContainer>
-          <CancelButton onPress={onCancel}>
-            <ButtonText color="#546e7a">Cancel</ButtonText>
-          </CancelButton>
-          <AddButton onPress={handleSubmit}><ButtonText>Add Timer</ButtonText></AddButton>
-        </ButtonContainer>
-      </FormContainer>
+    <FormContainer>
+      <InputField
+        placeholder="Timer Title"
+        placeholderTextColor="#90a4ae"
+        value={title}
+        onChangeText={setTitle}
+      />
+      <InputField
+        placeholder="Duration in seconds"
+        placeholderTextColor="#90a4ae"
+        value={duration}
+        onChangeText={text => {
+          if (/^\d+$/.test(text) || text === '') {
+            setDuration(text);
+          }
+        }}
+        keyboardType="numeric"
+      />
+      <ButtonContainer>
+        <CancelButton onPress={onCancel}>
+          <ButtonText color="#546e7a">Cancel</ButtonText>
+        </CancelButton>
+        <AddButton onPress={handleSubmit}>
+          <ButtonText>Add Timer</ButtonText>
+        </AddButton>
+      </ButtonContainer>
+    </FormContainer>
   );
 };
 
